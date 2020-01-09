@@ -1,8 +1,6 @@
 # Constraints Extent
 The Constraints Extent bundle allows allows you to restrict the allowed extent.
 
-![Screenshot App](https://github.com/conterra/mapapps-constraints-extent/blob/master/screenshot.JPG)
-
 ## Sample App
 https://demos.conterra.de/mapapps/resources/apps/downloads_constraintsextent/index.html
 
