@@ -1,0 +1,28 @@
+{
+    "name": "dn_constraintsextent",
+    "version": "1.0.0-SNAPSHOT",
+    "title": "${bundleName}",
+    "description": "${bundleDescription}",
+    "vendor": "con terra GmbH",
+    "productName": "con terra Developer Network",
+    "dependencies": {
+        "esri": "^4.x",
+        "map-widget": "^4.x"
+    },
+    "components": [
+        {
+            "name": "Config",
+            "impl": "./RestrictExtent",
+            "properties": {
+                "expandValue": 1.2,
+                "maxExtentGeometry": null
+            },
+            "references": [
+                {
+                    "name": "_mapWidgetModel",
+                    "providing": "map-widget.MapWidgetModel"
+                }
+            ]
+        }
+    ]
+}
