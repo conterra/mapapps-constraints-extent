@@ -24,6 +24,8 @@
             "locator-store",
             "toc",
             "popups-default",
+            "scalebar",
+            "coordinateviewer",
             "dn_constraintsextent"
         ],
         "require": [
@@ -36,7 +38,7 @@
     "bundles": {
         "dn_constraintsextent": {
             "Config": {
-                "expandValue": 1.5,
+                "expandValue": 2,
                 "maxExtentGeometry": {
                     "xmin": 753914.6294,
                     "ymin": 6591356.799400002,
