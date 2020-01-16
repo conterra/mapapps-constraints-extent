@@ -24,7 +24,8 @@ export default class RestrictExtent {
             const extentWatch = view.watch("extent", (extent) => {
                 if (extent) {
                     extentWatch.remove();
-                    this._oldExtent = this._getInitialExtent(view);
+                    this._oldExtent = this._getInitialOldExtent(view);
+                    this._initialExtent = view.extent;
                     this._watchForExtentChange(view);
                 }
             })
@@ -60,13 +61,13 @@ export default class RestrictExtent {
         return !geometryEngine.within(extent, maxExtentGeometry);
     }
 
-    _getInitialExtent(view) {
+    _getInitialOldExtent(view) {
         const maxExtentGeometry = this._getMaxExtentGeometry();
         if (!maxExtentGeometry) {
             return view.extent;
         }
-        const within = geometryEngine.within(view.extent, maxExtentGeometry);
-        if (within) {
+        const initialExtentWithinMaxExtentGeometry = geometryEngine.within(view.extent, maxExtentGeometry);
+        if (initialExtentWithinMaxExtentGeometry) {
             return view.extent;
         } else {
             return maxExtentGeometry;
@@ -74,11 +75,22 @@ export default class RestrictExtent {
     }
 
     _getMaxExtentGeometry() {
-        const maxExtentGeometry = jsonUtils.fromJSON(this._properties.maxExtentGeometry);
+        let maxExtentGeometry = jsonUtils.fromJSON(this._properties.maxExtentGeometry);
         if (!maxExtentGeometry) {
             return null;
         }
-        return maxExtentGeometry.extent.expand(this._properties.expandValue);
+        maxExtentGeometry = maxExtentGeometry.extent.expand(this._properties.expandValue);
+        if (!this._initialExtent) {
+            return maxExtentGeometry;
+        }
+        const initialExtentWithinMaxExtentGeometry = geometryEngine.within(this._initialExtent, maxExtentGeometry);
+        if (initialExtentWithinMaxExtentGeometry) {
+            return maxExtentGeometry;
+        } else {
+            // if initial extent is not within the max extent property unite both geometries and use this result as new max extent
+            const union = geometryEngine.union([maxExtentGeometry, this._initialExtent]);
+            return union.extent;
+        }
     }
 
     _getView() {
