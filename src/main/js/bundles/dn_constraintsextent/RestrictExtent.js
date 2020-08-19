@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import geometryEngine from "esri/geometry/geometryEngine";
+import {within, union} from "esri/geometry/geometryEngine";
 import * as jsonUtils from "esri/geometry/support/jsonUtils";
 
 const _watch = Symbol("_watch");
@@ -58,7 +58,7 @@ export default class RestrictExtent {
         if (!maxExtentGeometry) {
             return false;
         }
-        return !geometryEngine.within(extent, maxExtentGeometry);
+        return !within(extent, maxExtentGeometry);
     }
 
     _getInitialOldExtent(view) {
@@ -66,7 +66,7 @@ export default class RestrictExtent {
         if (!maxExtentGeometry) {
             return view.extent;
         }
-        const initialExtentWithinMaxExtentGeometry = geometryEngine.within(view.extent, maxExtentGeometry);
+        const initialExtentWithinMaxExtentGeometry = within(view.extent, maxExtentGeometry);
         if (initialExtentWithinMaxExtentGeometry) {
             return view.extent;
         } else {
@@ -83,12 +83,12 @@ export default class RestrictExtent {
         if (!this._initialExtent) {
             return maxExtentGeometry;
         }
-        const initialExtentWithinMaxExtentGeometry = geometryEngine.within(this._initialExtent, maxExtentGeometry);
+        const initialExtentWithinMaxExtentGeometry = within(this._initialExtent, maxExtentGeometry);
         if (initialExtentWithinMaxExtentGeometry) {
             return maxExtentGeometry;
         } else {
             // if initial extent is not within the max extent property unite both geometries and use this result as new max extent
-            const union = geometryEngine.union([maxExtentGeometry, this._initialExtent]);
+            const union = union([maxExtentGeometry, this._initialExtent]);
             return union.extent;
         }
     }
