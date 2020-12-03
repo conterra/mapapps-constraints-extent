@@ -1,3 +1,5 @@
+⚠️ This bundle is no longer needed in map.apps 4.10 or later.
+
 # Constraints Extent
 The Constraints Extent bundle allows allows you to restrict the allowed extent.
 
