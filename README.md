@@ -3,9 +3,6 @@
 # Constraints Extent
 The Constraints Extent bundle allows allows you to restrict the allowed extent.
 
-## Sample App
-https://demos.conterra.de/mapapps/resources/apps/downloads_constraintsextent/index.html
-
 ## Installation Guide
 
 [dn_constraintsextent Documentation](https://github.com/conterra/mapapps-constraints-extent/tree/master/src/main/js/bundles/dn_constraintsextent)
